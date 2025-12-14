@@ -1,0 +1,99 @@
+<div class="inicio-container">
+  <!-- BARRA DE ACCIONES -->
+  <div class="actions-bar">
+  <div class="actions-left">
+    <button class="btn btn-start">▶ Inicio</button>
+    <button class="btn btn-stop">⏹ Stop</button>
+    <button class="btn btn-export">📤 Exportar</button>
+
+    <div class="dropdown">
+      <button class="btn btn-config">⚙ Configuración ▾</button>
+      <div class="dropdown-menu">
+        <button (click)="abrirVisores()" class="dropdown-item">Configuración visores</button>
+        <button class="dropdown-item">Insertar pesada manual</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="separator-vertical">
+    <button class="btn-toolbar btn-error">
+      <span class="icon">⚠️</span> Error de conexión B1..
+    </button>
+    <button class="btn-toolbar btn-error">
+      <span class="icon">⚠️</span> Error de conexión B2..
+    </button>
+    <button class="btn-toolbar btn-error">
+      <span class="icon">⚠️</span> Error de conexión B3..
+    </button>
+    <button class="btn-toolbar btn-error">
+      <span class="icon">⚠️</span> Error de conexión B4..
+    </button>
+    <button class="btn-toolbar btn-error">
+      <span class="icon">⚠️</span> Error de conexión B5..
+    </button>
+  </div>
+
+  <!-- ESTADOS -->
+  <div class="connection-status" *ngIf="isSidebarOpen">
+    <span class="status-label">Conexiones</span>
+    <div class="status-indicators">
+      <div
+        *ngFor="let estado of estadosConexion"
+        class="status-item"
+        [style.background-color]="estado.color"
+        [title]="estado.nombre">
+        {{ estado.nombre }}
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="content">
+
+    <div class="table-card">
+      <table class="data-table">
+        <thead class="title-table">
+          <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Producto</th>
+            <th>Peso (kg)</th>
+            <th>Báscula</th>
+            <th>Operario</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- Filas dinámicas -->
+          <tr>
+            <td>1</td>
+            <td>05/12/2025 16:30</td>
+            <td>Producto A</td>
+            <td>1.250</td>
+            <td>BASFR01</td>
+            <td>Juan</td>
+          </tr>
+
+          <tr>
+            <td>2</td>
+            <td>05/12/2025 16:32</td>
+            <td>Producto B</td>
+            <td>980</td>
+            <td>BASFR02</td>
+            <td>Ana</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Aqui abrimos los modales necesarios -->
+   @if(isGeneralParamsModalOpen === true){
+    <app-modal-conexion-visores
+    [visible]="isGeneralParamsModalOpen"
+    (closed)="cerrarModalVisores()"></app-modal-conexion-visores>
+   }
+   
+</div>

@@ -8,7 +8,7 @@ import { LoginRequest, AuthResponse, UserInfo } from '../../features/auth/models
   providedIn: 'root',
 })
 export class Auth {
-   private http = inject(HttpClient);
+  private http = inject(HttpClient);
   private router = inject(Router);
 
   // Cambia esta URL por la de tu backend

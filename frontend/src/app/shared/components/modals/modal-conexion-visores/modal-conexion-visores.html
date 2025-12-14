@@ -1,0 +1,43 @@
+@if (visible) {
+  <div class="modal-backdrop" (click)="onBackdropClick($event)">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h2 class="modal-title">Conexión de Visores</h2>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="form">
+          <div class="row">
+            <div class="col content-one-scale">
+              <app-form-input label="Nombre" name="name"></app-form-input>
+              <app-form-input label="Ip" name="ipAddress"></app-form-input>
+              <app-form-input label="Puerto" name="port"></app-form-input>
+            </div>
+            <div class="col content-one-scale">
+              <app-form-input label="Nombre" name="name"></app-form-input>
+              <app-form-input label="Ip" name="ipAddress"></app-form-input>
+              <app-form-input label="Puerto" name="port"></app-form-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col content-one-scale">
+              <app-form-input label="Nombre" name="name"></app-form-input>
+              <app-form-input label="Ip" name="ipAddress"></app-form-input>
+              <app-form-input label="Puerto" name="port"></app-form-input>
+            </div>
+            <div class="col content-one-scale">
+              <app-form-input label="Nombre" name="name"></app-form-input>
+              <app-form-input label="Ip" name="ipAddress"></app-form-input>
+              <app-form-input label="Puerto" name="port"></app-form-input>
+            </div>
+          </div>
+        </form>
+        <app-button 
+          label="Guardar"
+          type="primary"
+          (clicked)="sendFrom()">
+        </app-button>
+      </div>
+    </div>
+  </div>
+}
