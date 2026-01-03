@@ -1,79 +1,38 @@
-﻿using Azure;
+﻿using Control_Estadistico_Web.Data;
 using Control_Estadistico_Web.DTOs.Auth;
+using Control_Estadistico_Web.Models;
 using Control_Estadistico_Web.Services.Auth;
+using Control_Estadistico_Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.SqlServer.Server;
-using Microsoft.Win32;
 using System.IdentityModel.Tokens.Jwt;
-using System.Numerics;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
 
 namespace Control_Estadistico_Web.Controllers
 {
-    /*
-    ControllerBase da funcionalidades para construir API REST, como:
-
-    Ok() → devuelve respuesta correcta.
-
-    BadRequest() → devuelve error 400.
-
-    Unauthorized() → devuelve error 401.
-
-    ActionResult<T> → devuelve objetos y estados HTTP.
-    */
-
     [Route("api/[controller]")]
     [ApiController]
-
     public class AuthController : ControllerBase
     {
-        #region Variables
-        /*
-         UserManager es una clase de Identity que se encarga de gestionar usuarios.
-         Sirve para acciones como:
-          * Crear usuarios
-          * Buscar usuarios por email, nombre, id
-          * Validar contraseñas
-          * Editar o eliminar usuarios
-        */
-        private readonly UserManager<IdentityUser> _userManager;
-
-        /*
-         Sirve para leer valores del appsettings.json o variables de entorno.
-         Se usa principalmente para leer la clave del JWT, el issuer, audience, etc.
-        */
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
-        #endregion
+        private readonly ApplicationDbContext _dbContext;
 
-        #region Constructor
-        public AuthController(UserManager<IdentityUser> userManager, IConfiguration configuration)
+        public AuthController(UserManager<ApplicationUser> userManager, IConfiguration configuration, ApplicationDbContext dbContext)
         {
             _userManager = userManager;
             _configuration = configuration;
+            _dbContext = dbContext;
         }
-        #endregion
 
         #region Registro
-        //Función para registrarse un usuario
-        /*
-        El método es asíncrono (async).
-
-        Recibe un objeto RegisterRequestDto, que contiene los datos del formulario (email, password, etc.).
-
-        Devuelve una respuesta AuthResponseDto con estado HTTP (Ok, BadRequest, etc.).
-        */
-        // api/auth/register
         [HttpPost("register")]
         public async Task<ActionResult<AuthResponseDto>> Register(RegisterRequestDto request)
         {
-            //validamos que la contraseña coincida
             if (request.Password != request.ConfirmPassword)
             {
                 return BadRequest(new AuthResponseDto
@@ -82,23 +41,37 @@ namespace Control_Estadistico_Web.Controllers
                     Message = "Las contraseñas no coinciden"
                 });
             }
-            //Crea un usuario de Identity.
-            //Si no mandan un Username, usa el email como nombre de usuario
-            var user = new IdentityUser
+
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+
+            // 1️⃣ Crear compañía
+            var company = new Company
+            {
+                Name = request.CompanyName,
+                Logo = "", // o un path por defecto
+                Cif = "DEFAULT_CIF",
+                Address = "DEFAULT_ADDRESS",
+                Location = "DEFAULT_LOCATION",
+                Phone = "000000000",
+                Email = "default@empresa.com"
+            };
+
+            _dbContext.companies.Add(company);
+            await _dbContext.SaveChangesAsync();
+
+            // 2️⃣ Crear usuario ADMIN asociado a la compañía
+            var user = new ApplicationUser
             {
                 Email = request.Email,
                 UserName = request.Username ?? request.Email,
+                CompanyId = company.Id
             };
 
-            //Usa Identity para guardar el usuario junto con su contraseña encriptada
             var result = await _userManager.CreateAsync(user, request.Password);
-            //Asignamos el rol de User por defecto al registrarse
-            await _userManager.AddToRoleAsync(user, "User");
 
-            //Si algo falló (contraseña débil, email duplicado, etc.),
-            //devuelve BadRequest con los errores.
             if (!result.Succeeded)
             {
+                await transaction.RollbackAsync();
                 return BadRequest(new AuthResponseDto
                 {
                     Succes = false,
@@ -106,44 +79,40 @@ namespace Control_Estadistico_Web.Controllers
                 });
             }
 
-            //Si todo estuvo bien, responde con 200 OK
-            //y un mensaje indicando que el usuario se registró
+            await _userManager.AddToRoleAsync(user, "Admin");
+
+            await transaction.CommitAsync();
+
+            var token = await GenerateJwtTokenAsync(user);
+
             return Ok(new AuthResponseDto
             {
                 Succes = true,
-                Message = "Usuario registrado correctamente"
+                Token = token,
+                Expiration = DateTime.UtcNow.AddHours(24),
+                Message = "Empresa y usuario creados correctamente"
             });
         }
+
         #endregion
 
         #region Login
-        //devuelve un ActionResult<AuthResponseDto> (un DTO con el resultado del login y el token si todo va bien)
-        //Función para logearse un usuario
-        // api/auth/login
         [HttpPost("login")]
         public async Task<ActionResult<AuthResponseDto>> Login(LoginRequestDto request)
         {
-            //Usa UserManager<IdentityUser> (parte de ASP.NET Identity) para buscar en la base de datos un usuario con ese email
             var user = await _userManager.FindByEmailAsync(request.Email);
 
-            //Si no existe el usuario o la contraseña no coincide (CheckPasswordAsync compara la contraseña con la almacenada en la BD de forma segura), se responde con 401 Unauthorized y un AuthResponseDto indicando error
-            //CheckPasswordAsync ya compara hashes y sal(no comparas el texto plano tú)
             if (user == null || !await _userManager.CheckPasswordAsync(user, request.Password))
             {
                 return Unauthorized(new AuthResponseDto
                 {
                     Succes = false,
-                    Message = "Credenciales inválidad"
+                    Message = "Credenciales inválidas"
                 });
             }
 
-            //Llama a una función que crea el JWT (cadena compacta que el cliente usará para autenticarse en siguientes peticiones)
-            var token = GenerateJwtToken(user);
+            var token = await GenerateJwtTokenAsync(user);
 
-            //Devuelve 200 OK con:
-            //Token: la cadena JWT.
-            //Expiration: la fecha/ hora en UTC cuando caduca(aquí 24 horas).
-            //Succes y Message: info legible para el cliente.
             return Ok(new AuthResponseDto
             {
                 Succes = true,
@@ -155,17 +124,34 @@ namespace Control_Estadistico_Web.Controllers
         #endregion
 
         #region Usuario logeado
-
         [Authorize]
         [HttpGet("me")]
         public async Task<ActionResult> Me()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized(new { message = "No se pudo obtener el ID del usuario" });
+            }
+
             var user = await _userManager.FindByIdAsync(userId);
 
-            return Ok(new { user.Id, user.Email, user.UserName });
-        }
+            if (user == null)
+            {
+                return NotFound(new { message = "Usuario no encontrado" });
+            }
 
+            var roles = await _userManager.GetRolesAsync(user);
+
+            return Ok(new
+            {
+                user.Id,
+                user.Email,
+                user.UserName,
+                Roles = roles
+            });
+        }
         #endregion
 
         #region Asignar rol a usuario
@@ -182,46 +168,96 @@ namespace Control_Estadistico_Web.Controllers
 
             return Ok(new { message = $"Rol {request.Role} asignado correctamente a {request.Email}" });
         }
-
-
         #endregion
 
-        #region Función que genera token del usuario
-        //Funcion que genera el token
-        private string GenerateJwtToken(IdentityUser user)
+        #region Registro por invitación
+        [HttpPost("register/invitation")]
+        public async Task<ActionResult<AuthResponseDto>> RegisterWithInvitation(RegisterWithInvitationDto request)
         {
-            //Claims = pares clave/valor que irán en el payload del token. Ejemplos:
-            //sub(subject): email del usuario.
-            //jti: id único del token(evita duplicados / ayuda a revocación).
-            //NameIdentifier y Name: id y nombre de usuario.
-            //Estas claims permiten al servidor identificar al usuario cuando valide el token.
-            var claims = new[]
+            var invitation = await _dbContext.Invitations
+                .FirstOrDefaultAsync(i =>
+                    i.Token == request.Token &&
+                    !i.Used &&
+                    i.ExpiresAt > DateTime.UtcNow);
+
+            if (invitation == null)
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Email!),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Name, user.UserName!)
+                return BadRequest(new AuthResponseDto
+                {
+                    Succes = false,
+                    Message = "Invitación inválida o expirada"
+                });
+            }
+
+            // Validación extra: email debe coincidir
+            if (!string.Equals(invitation.Email, request.Email, StringComparison.OrdinalIgnoreCase))
+            {
+                return BadRequest(new AuthResponseDto
+                {
+                    Succes = false,
+                    Message = "El email no coincide con la invitación"
+                });
+            }
+
+            var user = new ApplicationUser
+            {
+                Email = request.Email,
+                UserName = request.Email,
+                CompanyId = invitation.CompanyId
             };
 
-            //Lee Jwt:Key desde appsettings (o secrets)
-            //Convierte la cadena en bytes y crea una clave simétrica(SymmetricSecurityKey) que se usará para firmar el token(HMAC)
-            //Importante: esta clave debe ser larga y segura(mínimo 256 bits recomendado para HS256) y no guardarla en el código
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                _configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key no configurada")));
+            var result = await _userManager.CreateAsync(user, request.Password);
 
-            //Indica cómo se firmará el token: aquí HMAC-SHA256 usando la key
-            //Firmar el token garantiza que quien lo recibe pueda verificar que el token lo generó tu servidor(y que no ha sido modificado)
+            if (!result.Succeeded)
+            {
+                return BadRequest(new AuthResponseDto
+                {
+                    Succes = false,
+                    Message = string.Join(", ", result.Errors.Select(e => e.Description))
+                });
+            }
+
+            await _userManager.AddToRoleAsync(user, invitation.Role);
+
+            invitation.Used = true;
+            await _dbContext.SaveChangesAsync();
+
+            var token = await GenerateJwtTokenAsync(user);
+
+            return Ok(new AuthResponseDto
+            {
+                Succes = true,
+                Token = token,
+                Expiration = DateTime.UtcNow.AddHours(24),
+                Message = "Usuario registrado mediante invitación"
+            });
+        }
+        #endregion
+
+        #region Generar Token JWT
+        private async Task<string> GenerateJwtTokenAsync(ApplicationUser user)
+        {
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Email, user.Email!),
+                new Claim("company_id", user.CompanyId.ToString())
+            };
+
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
+            var key = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!)
+            );
+
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            /*
-            Construye el objeto JwtSecurityToken con:
-             * issuer: quién emite el token (normalmente tu app / dominio).
-             * audience: para quién es (tu API u otros consumidores).
-             * claims: los datos del usuario.
-             * expires: cuándo caduca.
-             * signingCredentials: la forma de firmarlo.
-            Nota importante: aquí en tu código se está usando _configuration["Jwt:Key"] como issuer. Eso parece un error: issuer debería ser algo como "MiApp" o una URL, no la clave secreta. (Lo correcto es issuer: _configuration["Jwt:Issuer"]).
-            */
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
@@ -230,11 +266,50 @@ namespace Control_Estadistico_Web.Controllers
                 signingCredentials: creds
             );
 
-            //Convierte el token a la cadena compacta que se envía al cliente (formato xxxxx.yyyyy.zzzzz).
             return new JwtSecurityTokenHandler().WriteToken(token);
-
         }
+
         #endregion
 
+        #region Invitación
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("invite")]
+        public async Task<ActionResult> CreateInvitation([FromBody] CreateInvitationDto request,[FromServices] IEmailService emailService)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null) return Unauthorized();
+
+            var adminUser = await _userManager.FindByIdAsync(userId);
+            if (adminUser == null) return Unauthorized();
+
+            var company = await _dbContext.companies
+                .FirstAsync(c => c.Id == adminUser.CompanyId);
+
+            var invitation = new Invitation
+            {
+                CompanyId = adminUser.CompanyId,
+                Email = request.Email,
+                Role = request.Role,
+                Token = Guid.NewGuid().ToString(),
+                ExpiresAt = DateTime.UtcNow.AddDays(7)
+            };
+
+            _dbContext.Invitations.Add(invitation);
+            await _dbContext.SaveChangesAsync();
+
+            // 📧 Enviar email
+            await emailService.SendInvitationEmailAsync(
+                invitation.Email,
+                company.Name,
+                invitation.Token
+            );
+
+            return Ok(new
+            {
+                message = "Invitación enviada correctamente"
+            });
+        }
+        #endregion
     }
 }

@@ -2,7 +2,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { LoginRequest, AuthResponse, UserInfo } from '../../features/auth/models/auth.models';
+import { LoginRequest, AuthResponse, UserInfo } from '../../pages/auth/models/auth.models';
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +42,66 @@ export class Auth {
       })
     );
   }
+
+    /** REGISTER */
+  register(registerData: {
+    email: string;
+    username: string;
+    companyName: string;
+    password: string;
+    confirmPassword: string;
+  }): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, registerData).pipe(
+      tap((response) => {
+        if (response.succes && response.token) {
+          // Guardamos al usuario automáticamente tras el registro
+          this.handleAuthSuccess(response, registerData.email);
+        }
+      }),
+      catchError((error) => throwError(() => error))
+    );
+  }
+
+   /** CREATE INVITATION */
+createInvitation(invitationData: { email: string; role: string }): Observable<{ message: string }> {
+  const token = this.getToken();
+  if (!token) {
+    return throwError(() => new Error('Usuario no autenticado'));
+  }
+
+  return this.http.post<{ message: string }>(
+    `${this.apiUrl}/invite`,
+    invitationData,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+}
+
+/** REGISTER WITH INVITATION */
+registerWithInvitation(invitationData: {
+  token: string;
+  email: string;
+  password: string;
+}): Observable<AuthResponse> {
+  return this.http
+    .post<AuthResponse>(`${this.apiUrl}/register/invitation`, invitationData)
+    .pipe(
+      tap((response) => {
+        if (response.succes && response.token) {
+          // Autologin tras registro por invitación
+          this.handleAuthSuccess(response, invitationData.email);
+        }
+      }),
+      catchError((error) => {
+        console.error('Error en registro por invitación:', error);
+        return throwError(() => error);
+      })
+    );
+}
+
 
   /**
    * Maneja el éxito de la autenticación

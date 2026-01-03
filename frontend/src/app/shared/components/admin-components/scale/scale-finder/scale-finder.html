@@ -1,0 +1,33 @@
+<section class="card">
+ <h2>Buscador de básculas</h2>
+
+ <form [formGroup]="form">
+    <div class="content-card">
+        <div class="form-input-wrapper">
+        <label class="form-input-label" for="name">Nombre</label>
+        <input class="form-input-field" id="name" type="text" formControlName="name" />
+    </div>
+    <div class="form-input-wrapper">
+        <label class="form-input-label" for="ipAddress">Ip</label>
+        <input class="form-input-field" id="ipAddress" type="text" formControlName="ipAddress" />
+    </div>
+    <div class="form-input-wrapper">
+        <label class="form-input-label" for="port">Puerto</label>
+        <input class="form-input-field" id="port" type="text" formControlName="port" />
+    </div>
+    </div>
+    
+  <div class="actions">
+   <button class="app-btn" type="button" (click)="reset()">Reiniciar</button>
+   <button (click)="abrirVisores()" class="app-btn" type="button">Nuevo</button>
+  </div>
+ </form>
+
+ <!-- Aqui abrimos los modales necesarios -->
+   @if(isGeneralParamsModalOpen === true){
+    <app-modal-conexion-visores
+    [visible]="isGeneralParamsModalOpen"
+    (closed)="cerrarModalVisores()"></app-modal-conexion-visores>
+   }
+
+</section>

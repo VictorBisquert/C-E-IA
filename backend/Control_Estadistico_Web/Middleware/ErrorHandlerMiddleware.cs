@@ -24,7 +24,12 @@ namespace Control_Estadistico_Web.Middleware
                 _logger.LogError(ex, "Unhandled exception");
                 context.Response.StatusCode = 500;
                 context.Response.ContentType = "application/json";
-                var result = JsonSerializer.Serialize(new { error = "Internal server error" });
+                var result = JsonSerializer.Serialize(new
+                {
+                    error = ex.Message,
+                    inner = ex.InnerException?.Message
+                });
+
 
                 await context.Response.WriteAsync(result);
             }

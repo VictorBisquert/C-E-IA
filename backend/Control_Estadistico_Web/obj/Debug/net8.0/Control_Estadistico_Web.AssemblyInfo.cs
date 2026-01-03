@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("5e9d2c93-f1b5-44d4-926c-bc1822a577db")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("Control_Estadistico_Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e3cc4622adab5655a1e3ea9ad3e4cf3107eb8c7a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+de076438d15bfedfaedeb212877704ac34a2d60d")]
 [assembly: System.Reflection.AssemblyProductAttribute("Control_Estadistico_Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Control_Estadistico_Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

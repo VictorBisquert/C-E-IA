@@ -11,5 +11,7 @@ namespace Control_Estadistico_Web.DTOs
         public bool IsActive { get; set; } = true;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? LastConnectionAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+
     }
 }

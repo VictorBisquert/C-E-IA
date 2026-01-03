@@ -6,4 +6,5 @@ export interface Scale {
   isActive: boolean;
   createdAt: string;
   lastConnectionAt?: string;
+  updateAt: string;
 }

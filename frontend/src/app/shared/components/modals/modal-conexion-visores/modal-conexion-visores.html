@@ -4,39 +4,22 @@
       <div class="modal-header">
         <h2 class="modal-title">Conexión de Visores</h2>
       </div>
-
       <div class="modal-body">
-        <form [formGroup]="form">
-          <div class="row">
-            <div class="col content-one-scale">
-              <app-form-input label="Nombre" name="name"></app-form-input>
-              <app-form-input label="Ip" name="ipAddress"></app-form-input>
-              <app-form-input label="Puerto" name="port"></app-form-input>
-            </div>
-            <div class="col content-one-scale">
-              <app-form-input label="Nombre" name="name"></app-form-input>
-              <app-form-input label="Ip" name="ipAddress"></app-form-input>
-              <app-form-input label="Puerto" name="port"></app-form-input>
-            </div>
+        <form [formGroup]="scaleForm" (ngSubmit)="sendForm()">
+          <div class="form-input-wrapper">
+            <label class="form-input-label" for="name">Nombre</label>
+            <input class="form-input-field" id="name" type="text" formControlName="name" />
           </div>
-          <div class="row">
-            <div class="col content-one-scale">
-              <app-form-input label="Nombre" name="name"></app-form-input>
-              <app-form-input label="Ip" name="ipAddress"></app-form-input>
-              <app-form-input label="Puerto" name="port"></app-form-input>
-            </div>
-            <div class="col content-one-scale">
-              <app-form-input label="Nombre" name="name"></app-form-input>
-              <app-form-input label="Ip" name="ipAddress"></app-form-input>
-              <app-form-input label="Puerto" name="port"></app-form-input>
-            </div>
+          <div class="form-input-wrapper">
+            <label class="form-input-label" for="ipAddress">Ip</label>
+            <input class="form-input-field" id="ipAddress" type="text" formControlName="ipAddress" />
           </div>
+          <div class="form-input-wrapper">
+            <label class="form-input-label" for="port">Puerto</label>
+            <input class="form-input-field" id="port" type="text" formControlName="port" />
+          </div>
+          <button class="app-btn" type="submit" [disabled]="!scaleForm.valid">Guardar</button>
         </form>
-        <app-button 
-          label="Guardar"
-          type="primary"
-          (clicked)="sendFrom()">
-        </app-button>
       </div>
     </div>
   </div>

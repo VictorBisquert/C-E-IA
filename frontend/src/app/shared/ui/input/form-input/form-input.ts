@@ -1,10 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
+import { 
+    ControlContainer, 
+    FormGroupDirective, 
+    ReactiveFormsModule,
+    FormControl, 
+    AbstractControl // <-- Puedes usarlo, pero es mejor tipar como FormControl si es lo que usas en el template
+} from '@angular/forms';
 
 @Component({
   selector: 'app-form-input',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './form-input.html',
   styleUrls: ['./form-input.css'],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
@@ -20,7 +27,7 @@ export class FormInput {
   constructor(private ctrlContainer: ControlContainer) {}
 
   get control() {
-    return this.ctrlContainer.control?.get(this.name);
+    return this.ctrlContainer.control?.get(this.name) as FormControl | null;
   }
 
   getErrorMessage(): string {

@@ -1,1 +1,44 @@
-<p>modal-parametros-generales works!</p>
+<div class="modal">
+
+  <h2>Parámetros generales</h2>
+
+  <form [formGroup]="form">
+
+    <app-modal-input
+      label="Nombre"
+      placeholder="Nombre de la balanza"
+      required
+      formControlName="name">
+    </app-modal-input>
+
+    <app-modal-input
+      label="Dirección IP"
+      placeholder="192.168.1.100"
+      required
+      formControlName="ipAddress">
+    </app-modal-input>
+
+    <app-modal-input
+      label="Puerto"
+      type="number"
+      placeholder="5000"
+      required
+      formControlName="port">
+    </app-modal-input>
+
+  </form>
+
+  <div class="actions">
+    <button class="btn secondary" (click)="cancelar()">
+      Cancelar
+    </button>
+
+    <button
+      class="btn primary"
+      [disabled]="form.invalid || saving"
+      (click)="guardar()">
+      Guardar
+    </button>
+  </div>
+
+</div>

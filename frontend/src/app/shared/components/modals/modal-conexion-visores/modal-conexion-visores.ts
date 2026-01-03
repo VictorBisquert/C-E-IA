@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 //importaciones para formularios
@@ -6,9 +6,9 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angula
 import { FormInput } from '../../../ui/input/form-input/form-input';
 import { Button } from '../../button-input/button';
 
-// llamada para datos de la api
-import { Scaleapi } from '../../../../core/services/scaleapi';
-import { CreateScaleDto } from '../../../../core/infrastructure/dtos/scale.dto';
+// llamada para datos del store
+import { ScaleDto } from '../../../../core/infrastructure/dtos/scale.dto';
+import { ScaleStore } from '../../../../features/scale/scale.store';
 
 @Component({
   selector: 'app-modal-conexion-visores',
@@ -20,40 +20,66 @@ import { CreateScaleDto } from '../../../../core/infrastructure/dtos/scale.dto';
 export class ModalConexionVisores {
   @Input() visible = false; // viene del padre
   @Output() closed = new EventEmitter<void>(); // el hijo avisa al padre
+  @Input() scaleToEdit: ScaleDto | null = null; // <-- input del objeto
 
-  constructor(private scaleApi: Scaleapi) {}
+  store = inject(ScaleStore);
+
+  scales: ScaleDto[] = [];
+
+
+  constructor() {}
 
   //Formulario para conexión basculas
-  form = new FormGroup({
+  scaleForm = new FormGroup({
     name: new FormControl('', { validators: [Validators.required] }),
     ipAddress: new FormControl('', { validators: [Validators.required] }),
     port: new FormControl<number | null>(null, { validators: Validators.required }),
   });
 
-  sendForm() {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
+    ngOnChanges(changes: SimpleChanges) {
+    // Si llega un objeto para editar, rellenamos el formulario
+    if (changes['scaleToEdit'] && this.scaleToEdit) {
+      this.scaleForm.setValue({
+        name: this.scaleToEdit.name,
+        ipAddress: this.scaleToEdit.ipAddress,
+        port: this.scaleToEdit.port,
+      });
+    } else if (changes['scaleToEdit'] && !this.scaleToEdit) {
+      // si no hay objeto, reiniciamos formulario
+      this.scaleForm.reset();
     }
-
-    // Crear DTO con datos del formulario
-    const dto: CreateScaleDto = {
-      name: this.form.value.name!,
-      ipAddress: this.form.value.ipAddress!,
-      port: this.form.value.port!,
-    };
-
-    // Llamada al backend
-    this.scaleApi.create(dto).subscribe({
-      next: (scale) => {
-        console.log('Scale creada:', scale);
-        this.cerrar();
-      },
-      error: (err) => {
-        console.error('Error al crear scale:', err);
-      },
-    });
   }
+
+  onSubmit() {
+    // TODO: Use EventEmitter with form value
+    console.warn(this.scaleForm.value);
+  }
+
+  //boton guardar, creamos si es null el objeto, sino editamos ya que tenemos un objeto cargado
+  sendForm() {
+  if (this.scaleForm.invalid) {
+    this.scaleForm.markAllAsTouched();
+    return;
+  }
+
+  const dto: ScaleDto = {
+    id: this.scaleToEdit?.id, 
+    name: this.scaleForm.value.name!,
+    ipAddress: this.scaleForm.value.ipAddress!,
+    port: this.scaleForm.value.port!,
+    isActive: true,
+  };
+
+  if (this.scaleToEdit) {
+    console.log('[ModalConexionVisores] Guardando edición:', dto);
+    this.store.updateScale(dto);
+  } else {
+    console.log('[ModalConexionVisores] Creando nueva báscula:', dto);
+    this.store.createScale(dto);
+  }
+
+  this.cerrar();
+}
   //fin formulario
 
   cerrar() {

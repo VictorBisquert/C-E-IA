@@ -1,8 +1,11 @@
-export interface CreateScaleDto {
+export interface ScaleDto {
+  id?: string;
   name: string;
   ipAddress: string;
   port: number;
-  //isActive: boolean;
+  isActive: boolean;
 }
 
-export interface UpdateScaleDto extends CreateScaleDto {}
+
+
+export interface UpdateScaleDto extends ScaleDto {}

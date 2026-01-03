@@ -1,18 +1,34 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-Web\\backend\\",
+  "WorkspaceRootPath": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EE63CD32-0240-4353-9387-0954EE141AFF}|Control_Estadistico_Web\\Control_Estadistico_Web.csproj|c:\\users\\victo\\desktop\\proyectos programaci\u00F3n\\.net y angular\\control-estadistico-web\\backend\\control_estadistico_web\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{EE63CD32-0240-4353-9387-0954EE141AFF}|Control_Estadistico_Web\\Control_Estadistico_Web.csproj|solutionrelative:control_estadistico_web\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{EE63CD32-0240-4353-9387-0954EE141AFF}|Control_Estadistico_Web\\Control_Estadistico_Web.csproj|c:\\users\\victo\\desktop\\proyectos programaci\u00F3n\\.net y angular\\control-estadistico-ia\\backend-multitenant\\control_estadistico_web\\dtos\\installationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE63CD32-0240-4353-9387-0954EE141AFF}|Control_Estadistico_Web\\Control_Estadistico_Web.csproj|solutionrelative:control_estadistico_web\\dtos\\installationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE63CD32-0240-4353-9387-0954EE141AFF}|Control_Estadistico_Web\\Control_Estadistico_Web.csproj|c:\\users\\victo\\desktop\\proyectos programaci\u00F3n\\.net y angular\\control-estadistico-web\\backend\\control_estadistico_web\\dtos\\auth\\loginrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EE63CD32-0240-4353-9387-0954EE141AFF}|Control_Estadistico_Web\\Control_Estadistico_Web.csproj|solutionrelative:control_estadistico_web\\dtos\\auth\\loginrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{87B9969D-251C-4A07-AADA-E3AE18765D2E}|Control_Estadistico_Web.Test\\Control_Estadistico_Web.Test.csproj|c:\\users\\victo\\desktop\\proyectos programaci\u00F3n\\.net y angular\\control-estadistico-ia\\backend-multitenant\\control_estadistico_web.test\\services\\installationservicetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{87B9969D-251C-4A07-AADA-E3AE18765D2E}|Control_Estadistico_Web.Test\\Control_Estadistico_Web.Test.csproj|solutionrelative:control_estadistico_web.test\\services\\installationservicetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE63CD32-0240-4353-9387-0954EE141AFF}|Control_Estadistico_Web\\Control_Estadistico_Web.csproj|c:\\users\\victo\\desktop\\proyectos programaci\u00F3n\\.net y angular\\control-estadistico-web\\backend\\control_estadistico_web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EE63CD32-0240-4353-9387-0954EE141AFF}|Control_Estadistico_Web\\Control_Estadistico_Web.csproj|solutionrelative:control_estadistico_web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EE63CD32-0240-4353-9387-0954EE141AFF}|Control_Estadistico_Web\\Control_Estadistico_Web.csproj|c:\\users\\victo\\desktop\\proyectos programaci\u00F3n\\.net y angular\\control-estadistico-ia\\backend-multitenant\\control_estadistico_web\\services\\implementations\\installationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE63CD32-0240-4353-9387-0954EE141AFF}|Control_Estadistico_Web\\Control_Estadistico_Web.csproj|solutionrelative:control_estadistico_web\\services\\implementations\\installationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE63CD32-0240-4353-9387-0954EE141AFF}|Control_Estadistico_Web\\Control_Estadistico_Web.csproj|c:\\users\\victo\\desktop\\proyectos programaci\u00F3n\\.net y angular\\control-estadistico-ia\\backend-multitenant\\control_estadistico_web\\models\\installation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE63CD32-0240-4353-9387-0954EE141AFF}|Control_Estadistico_Web\\Control_Estadistico_Web.csproj|solutionrelative:control_estadistico_web\\models\\installation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE63CD32-0240-4353-9387-0954EE141AFF}|Control_Estadistico_Web\\Control_Estadistico_Web.csproj|c:\\users\\victo\\desktop\\proyectos programaci\u00F3n\\.net y angular\\control-estadistico-ia\\backend-multitenant\\control_estadistico_web\\repositories\\implementations\\installationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE63CD32-0240-4353-9387-0954EE141AFF}|Control_Estadistico_Web\\Control_Estadistico_Web.csproj|solutionrelative:control_estadistico_web\\repositories\\implementations\\installationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE63CD32-0240-4353-9387-0954EE141AFF}|Control_Estadistico_Web\\Control_Estadistico_Web.csproj|c:\\users\\victo\\desktop\\proyectos programaci\u00F3n\\.net y angular\\control-estadistico-ia\\backend-multitenant\\control_estadistico_web\\controllers\\installationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE63CD32-0240-4353-9387-0954EE141AFF}|Control_Estadistico_Web\\Control_Estadistico_Web.csproj|solutionrelative:control_estadistico_web\\controllers\\installationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE63CD32-0240-4353-9387-0954EE141AFF}|Control_Estadistico_Web\\Control_Estadistico_Web.csproj|c:\\users\\victo\\desktop\\proyectos programaci\u00F3n\\.net y angular\\control-estadistico-ia\\backend-multitenant\\control_estadistico_web\\controllers\\scalescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE63CD32-0240-4353-9387-0954EE141AFF}|Control_Estadistico_Web\\Control_Estadistico_Web.csproj|solutionrelative:control_estadistico_web\\controllers\\scalescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,44 +38,93 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "LoginRequestDto.cs",
-              "DocumentMoniker": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-Web\\backend\\Control_Estadistico_Web\\DTOs\\Auth\\LoginRequestDto.cs",
-              "RelativeDocumentMoniker": "Control_Estadistico_Web\\DTOs\\Auth\\LoginRequestDto.cs",
-              "ToolTip": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-Web\\backend\\Control_Estadistico_Web\\DTOs\\Auth\\LoginRequestDto.cs",
-              "RelativeToolTip": "Control_Estadistico_Web\\DTOs\\Auth\\LoginRequestDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAASAAAAAAAAAA==",
+              "Title": "InstallationServiceTest.cs",
+              "DocumentMoniker": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web.Test\\Services\\InstallationServiceTest.cs",
+              "RelativeDocumentMoniker": "Control_Estadistico_Web.Test\\Services\\InstallationServiceTest.cs",
+              "ToolTip": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web.Test\\Services\\InstallationServiceTest.cs",
+              "RelativeToolTip": "Control_Estadistico_Web.Test\\Services\\InstallationServiceTest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T21:50:38.693Z"
+              "WhenOpened": "2026-01-01T21:12:35.574Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-Web\\backend\\Control_Estadistico_Web\\Program.cs",
-              "RelativeDocumentMoniker": "Control_Estadistico_Web\\Program.cs",
-              "ToolTip": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-Web\\backend\\Control_Estadistico_Web\\Program.cs",
-              "RelativeToolTip": "Control_Estadistico_Web\\Program.cs",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAAwEoAAAABAAAAAAAAAA==",
+              "Title": "InstallationService.cs",
+              "DocumentMoniker": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web\\Services\\Implementations\\InstallationService.cs",
+              "RelativeDocumentMoniker": "Control_Estadistico_Web\\Services\\Implementations\\InstallationService.cs",
+              "ToolTip": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web\\Services\\Implementations\\InstallationService.cs",
+              "RelativeToolTip": "Control_Estadistico_Web\\Services\\Implementations\\InstallationService.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAlwFMAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T19:01:37.3Z"
+              "WhenOpened": "2026-01-01T21:12:01.314Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Installation.cs",
+              "DocumentMoniker": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web\\Models\\Installation.cs",
+              "RelativeDocumentMoniker": "Control_Estadistico_Web\\Models\\Installation.cs",
+              "ToolTip": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web\\Models\\Installation.cs",
+              "RelativeToolTip": "Control_Estadistico_Web\\Models\\Installation.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-01T21:10:53.921Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-Web\\backend\\Control_Estadistico_Web\\appsettings.json",
-              "RelativeDocumentMoniker": "Control_Estadistico_Web\\appsettings.json",
-              "ToolTip": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-Web\\backend\\Control_Estadistico_Web\\appsettings.json",
-              "RelativeToolTip": "Control_Estadistico_Web\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-12-02T19:01:38.71Z",
+              "Title": "InstallationDto.cs",
+              "DocumentMoniker": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web\\DTOs\\InstallationDto.cs",
+              "RelativeDocumentMoniker": "Control_Estadistico_Web\\DTOs\\InstallationDto.cs",
+              "ToolTip": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web\\DTOs\\InstallationDto.cs",
+              "RelativeToolTip": "Control_Estadistico_Web\\DTOs\\InstallationDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-01T21:05:10.709Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "InstallationRepository.cs",
+              "DocumentMoniker": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web\\Repositories\\Implementations\\InstallationRepository.cs",
+              "RelativeDocumentMoniker": "Control_Estadistico_Web\\Repositories\\Implementations\\InstallationRepository.cs",
+              "ToolTip": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web\\Repositories\\Implementations\\InstallationRepository.cs",
+              "RelativeToolTip": "Control_Estadistico_Web\\Repositories\\Implementations\\InstallationRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-31T16:07:47.336Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ScalesController.cs",
+              "DocumentMoniker": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web\\Controllers\\ScalesController.cs",
+              "RelativeDocumentMoniker": "Control_Estadistico_Web\\Controllers\\ScalesController.cs",
+              "ToolTip": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web\\Controllers\\ScalesController.cs",
+              "RelativeToolTip": "Control_Estadistico_Web\\Controllers\\ScalesController.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAQwGsAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-31T16:01:28.84Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "InstallationController.cs",
+              "DocumentMoniker": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web\\Controllers\\InstallationController.cs",
+              "RelativeDocumentMoniker": "Control_Estadistico_Web\\Controllers\\InstallationController.cs",
+              "ToolTip": "C:\\Users\\victo\\Desktop\\Proyectos Programaci\u00F3n\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web\\Controllers\\InstallationController.cs",
+              "RelativeToolTip": "Control_Estadistico_Web\\Controllers\\InstallationController.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAQwKQAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-31T16:01:23.782Z"
             }
           ]
         }

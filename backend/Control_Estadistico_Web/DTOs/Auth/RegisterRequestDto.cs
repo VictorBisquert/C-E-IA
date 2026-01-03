@@ -29,5 +29,8 @@ namespace Control_Estadistico_Web.DTOs.Auth
 
         [Required]
         public string Username { get; set; } = string.Empty;
+
+        [Required]
+        public string CompanyName { get; set; } = string.Empty;
     }
 }

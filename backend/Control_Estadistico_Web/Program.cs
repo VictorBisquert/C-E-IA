@@ -1,4 +1,5 @@
 using Control_Estadistico_Web.Data;
+using Control_Estadistico_Web.DTOs.Auth;
 using Control_Estadistico_Web.Mappings;
 using Control_Estadistico_Web.Middleware;
 using Control_Estadistico_Web.Repositories.Implementations;
@@ -13,91 +14,171 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// **************************
-// * Estructura del Program *
-// **************************
+// =========================
+// Servicios
+// =========================
 
-// ****** Registrar servicios ****** \\
+/*
+ En ASP.NET Core, el orden lógico es:
 
-//Aquí va AddDbContext, AddIdentity, AddAuthentication, AddControllers, etc.
+1. Infraestructura base
 
-// ===== Configurar DbContext con SQL Server =====
+    -DbContext
+
+    -Identity
+
+    -Authentication / Authorization
+
+2. Servicios transversales
+
+    -Email
+
+    -Logging
+
+    -Caching
+
+3. Servicios de dominio
+
+    -Repositorios
+
+    -Servicios de negocio
+
+4. Controllers / Swagger / CORS
+ */
+
+// DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
 
+// Identity
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.User.RequireUniqueEmail = true;
+})
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
 
-// ===== Configurar Identity =====
-// Sistema de autenticación y manejo de usuarios de .NET
-// Con el siguiente código activamos identity en el proyecto
-// IdentityUser ? representa un usuario (ejemplo: nombre, email, contraseña).
-// IdentityRole ? representa un rol (ejemplo: "Admin", "Usuario").
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>() //Esto le dice a Identity dónde guardar los datos de usuarios y roles.
-    .AddDefaultTokenProviders(); // Agrega proveedores de tokens por defecto. Uso como restablecer contraseña, confirmar email,verificación de dos factores (2FA).
+// Authorization (FALTABA)
+builder.Services.AddAuthorization();
 
-// ===== Configurar Autenticación JWT (va después de Identity) =====
-var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
+// JWT
+var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!);
 
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-    .AddJwtBearer(options =>
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(key)
-        };
-    });
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
 
-// ===== AutoMapper =====
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ClockSkew = TimeSpan.Zero
+    };
+});
+
+// =========================
+// Servicios transversales
+// =========================
+
+builder.Services.AddScoped<IEmailService, EmailService>();
+
+// =========================
+// AutoMapper
+// =========================
+
+// AutoMapper
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<ScaleProfile>();
+    cfg.AddProfile<CompanyProfile>();
+    cfg.AddProfile<InstallationProfile>();
 });
 
-// ===== Repositorios y Servicios =====
+// =========================
+// Repositorios y servicios
+// =========================
+
+// Repositorios y servicios
 builder.Services.AddScoped<IScaleRepository, ScaleRepository>();
 builder.Services.AddScoped<IScaleService, ScaleService>();
 
-// ===== Controllers y Swagger =====
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<ICompanyService, CompanyService>();
+
+builder.Services.AddScoped<IInstallationRepository, InstallationRepository>();
+builder.Services.AddScoped<IInstallationService, InstallationService>();
+
+// =========================
+// Controllers + Swagger
+// =========================
+
+// Controllers + Swagger
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-// ===== CORS =====
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "Ingrese 'Bearer {token}'"
+    });
+
+    options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
+
+// CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngular", builder =>
+    options.AddPolicy("AllowAngular", policy =>
     {
-        builder.WithOrigins("http://localhost:4200")
-               .AllowAnyMethod()
-               .AllowAnyHeader()
-               .AllowCredentials();
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
     });
 });
 
 var app = builder.Build();
 
+// =========================
+// Pipeline
+// =========================
 
-//********************************************************************************************\\
-
-// ****** Configurar el pipeline de la aplicación ****** \\
-
-// Aquí van los UseAuthentication, UseAuthorization, UseSwagger, etc.
-
+// Seed roles
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    string[] roles = { "Admin", "User" };
-
-    foreach (var role in roles)
+    foreach (var role in new[] { "Admin", "User" })
     {
         if (!await roleManager.RoleExistsAsync(role))
         {
@@ -106,7 +187,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -114,9 +194,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<ErrorHandlerMiddleware>();
+
 app.UseHttpsRedirection();
 app.UseCors("AllowAngular");
-app.UseAuthentication(); // Debe ir ANTES de UseAuthorization()
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
