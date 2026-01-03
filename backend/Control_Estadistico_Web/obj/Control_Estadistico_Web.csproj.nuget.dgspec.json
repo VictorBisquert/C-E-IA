@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\victo\\Desktop\\Proyectos Programación\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web\\Control_Estadistico_Web.csproj": {}
+    "C:\\Users\\victo\\Desktop\\Proyectos Programación\\.Net y Angular\\Control-Estadistico-IA\\backend\\Control_Estadistico_Web\\Control_Estadistico_Web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\victo\\Desktop\\Proyectos Programación\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web\\Control_Estadistico_Web.csproj": {
+    "C:\\Users\\victo\\Desktop\\Proyectos Programación\\.Net y Angular\\Control-Estadistico-IA\\backend\\Control_Estadistico_Web\\Control_Estadistico_Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\victo\\Desktop\\Proyectos Programación\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web\\Control_Estadistico_Web.csproj",
+        "projectUniqueName": "C:\\Users\\victo\\Desktop\\Proyectos Programación\\.Net y Angular\\Control-Estadistico-IA\\backend\\Control_Estadistico_Web\\Control_Estadistico_Web.csproj",
         "projectName": "Control_Estadistico_Web",
-        "projectPath": "C:\\Users\\victo\\Desktop\\Proyectos Programación\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web\\Control_Estadistico_Web.csproj",
+        "projectPath": "C:\\Users\\victo\\Desktop\\Proyectos Programación\\.Net y Angular\\Control-Estadistico-IA\\backend\\Control_Estadistico_Web\\Control_Estadistico_Web.csproj",
         "packagesPath": "C:\\Users\\victo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\victo\\Desktop\\Proyectos Programación\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web\\obj\\",
+        "outputPath": "C:\\Users\\victo\\Desktop\\Proyectos Programación\\.Net y Angular\\Control-Estadistico-IA\\backend\\Control_Estadistico_Web\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

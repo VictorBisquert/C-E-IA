@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "eIDCgqZEUM0=",
+  "dgSpecHash": "/5xDkpkradk=",
   "success": true,
-  "projectFilePath": "C:\\Users\\victo\\Desktop\\Proyectos Programación\\.Net y Angular\\Control-Estadistico-IA\\backend-MultiTenant\\Control_Estadistico_Web\\Control_Estadistico_Web.csproj",
+  "projectFilePath": "C:\\Users\\victo\\Desktop\\Proyectos Programación\\.Net y Angular\\Control-Estadistico-IA\\backend\\Control_Estadistico_Web\\Control_Estadistico_Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\victo\\.nuget\\packages\\automapper\\15.1.0\\automapper.15.1.0.nupkg.sha512",
     "C:\\Users\\victo\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",

@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Control_Estadistico_Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+de076438d15bfedfaedeb212877704ac34a2d60d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f0b8d51744f72f0f21279c84c839ee56a92d5c80")]
 [assembly: System.Reflection.AssemblyProductAttribute("Control_Estadistico_Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Control_Estadistico_Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
