@@ -1,0 +1,41 @@
+  <div class="content">
+
+    <div class="table-card">
+      <table class="data-table">
+        <thead class="title-table">
+          <tr>
+            <th>Nombre</th>
+            <th>IP</th>
+            <th>Puerto</th>
+            <th class="actions-col">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let scale of store.filteredScales()">
+            <td>{{ scale.name }}</td>
+            <td>{{ scale.ipAddress }}</td>
+            <td>{{ scale.port }}</td>
+
+            <td class="actions-col">
+              <div class="actions">
+              <button class="app-btn-update" (click)="editScale(scale)">Editar</button>
+              <button class="app-btn-delete" (click)="deleteScale(scale.id!)">Borrar</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+     <!-- Aqui abrimos los modales necesarios -->
+   @if(isGeneralParamsModalOpen === true){
+    <app-modal-conexion-visores
+      [visible]="isGeneralParamsModalOpen"
+      [scaleToEdit]="scaleToEdit"
+      (closed)="cerrarModalVisores()">
+    </app-modal-conexion-visores>
+   }
+
+  </div>

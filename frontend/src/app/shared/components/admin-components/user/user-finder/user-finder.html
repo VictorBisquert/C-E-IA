@@ -1,0 +1,41 @@
+<section class="card">
+  <h2>Buscador de usuarios</h2>
+
+  <form [formGroup]="form">
+    <div class="content-card">
+      <!-- Nombre -->
+      <div class="form-input-wrapper">
+        <label class="form-input-label" for="name">Nombre</label>
+        <input class="form-input-field" id="name" type="text" formControlName="name" />
+      </div>
+
+      <!-- Email -->
+      <div class="form-input-wrapper">
+        <label class="form-input-label" for="correo">Email</label>
+        <input class="form-input-field" id="correo" type="text" formControlName="correo" />
+      </div>
+    </div>
+
+    <!-- Acciones -->
+    <div class="actions">
+      <!-- Botón a la izquierda -->
+      <div class="left-actions">
+        <button class="app-btn" type="button" (click)="OpenInvitationModal()">Invitar</button>
+      </div>
+
+      <!-- Botones a la derecha -->
+      <div class="right-actions">
+        <button class="app-btn" type="button" (click)="reset()">Reiniciar</button>
+        <button class="app-btn" type="button">Nuevo</button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Modal de invitación -->
+  @if(isGeneralParamsModalOpen){
+    <app-modal-invitation-users
+      [visible]="isGeneralParamsModalOpen"
+      (closed)="CloseInvitationModal()">
+    </app-modal-invitation-users>
+  }
+</section>

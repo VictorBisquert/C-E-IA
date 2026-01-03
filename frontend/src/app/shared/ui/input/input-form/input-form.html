@@ -1,0 +1,19 @@
+<div class="input-wrapper">
+  <label *ngIf="label">
+    {{ label }}
+    <span *ngIf="required" class="required">*</span>
+  </label>
+
+  <input
+    [type]="type"
+    [value]="value"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    (input)="handleInput($event)"
+    (blur)="markAsTouched()"
+  />
+
+  <div class="error" *ngIf="touched && required && !value">
+    {{ errorMessage }}
+  </div>
+</div>

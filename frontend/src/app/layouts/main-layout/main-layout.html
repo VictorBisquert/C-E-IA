@@ -1,0 +1,86 @@
+<div class="layout-container">
+  
+  <!-- HEADER / TOOLBAR -->
+  <header class="header">
+    <div class="header-left">
+      <button class="menu-toggle" (click)="toggleSidebar()">
+        ☰
+      </button>
+      <span class="app-title">AdIA - Control Estadístico</span>
+    </div>
+
+    <div class="header-center">
+      <span class="app-title">Nombre compañia</span>
+    </div>
+    
+    <div class="header-right">
+      <button class="header-btn">
+        <span class="icon">👤</span>
+        Usuario
+      </button>
+      <button class="header-btn btn-close" (click)="logout()">
+        ✕ Cerrar sesión
+      </button>
+    </div>
+  </header>
+
+  <div class="main-wrapper">
+    
+    <!-- SIDEBAR -->
+    <aside class="sidebar" [class.collapsed]="!isSidebarOpen">
+      <nav class="sidebar-nav">
+
+        <ng-container *ngFor="let item of menuItems">
+
+          <!-- ITEM NORMAL (sin hijos) -->
+          <a
+            *ngIf="!item.children"
+            [routerLink]="item.route"
+            routerLinkActive="active"
+            class="nav-item"
+            [title]="item.label">
+            <span class="nav-icon">{{ item.icon }}</span>
+            <span class="nav-label" *ngIf="isSidebarOpen">{{ item.label }}</span>
+          </a>
+
+          <!-- ITEM ADMIN (con acordeón) -->
+          <div *ngIf="item.children" class="admin-item">
+
+            <div class="admin-header" (click)="toggleAdmin()">
+              <span class="nav-icon">{{ item.icon }}</span>
+              <span class="nav-label" *ngIf="isSidebarOpen">{{ item.label }}</span>
+              <span 
+                class="chevron" 
+                *ngIf="isSidebarOpen"
+                [class.open]="isAdminOpen">
+                ▼
+              </span>
+            </div>
+
+            <div 
+              class="admin-children" 
+              [class.open]="isAdminOpen && isSidebarOpen">
+              <a
+                *ngFor="let child of item.children"
+                [routerLink]="child.route"
+                routerLinkActive="active"
+                class="nav-subitem">
+                {{ child.label }}
+              </a>
+            </div>
+
+          </div>
+
+        </ng-container>
+
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="content-area">
+      <!-- Aquí se cargan los componentes dinámicamente -->
+      <router-outlet></router-outlet>
+    </main>
+
+  </div>
+</div>

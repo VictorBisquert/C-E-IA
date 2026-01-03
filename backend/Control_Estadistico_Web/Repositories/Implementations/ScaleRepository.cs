@@ -50,6 +50,7 @@ namespace Control_Estadistico_Web.Repositories.Implementations
             existingScale.Port = scale.Port;
             existingScale.IsActive = scale.IsActive;
             existingScale.LastConnectionAt = scale.LastConnectionAt;
+            existingScale.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
 

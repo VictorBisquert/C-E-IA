@@ -1,0 +1,26 @@
+@if (visible) {
+  <div class="modal-backdrop" (click)="onBackdropClick($event)">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h2 class="modal-title">Conexión de Visores</h2>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="scaleForm" (ngSubmit)="sendForm()">
+          <div class="form-input-wrapper">
+            <label class="form-input-label" for="name">Nombre</label>
+            <input class="form-input-field" id="name" type="text" formControlName="name" />
+          </div>
+          <div class="form-input-wrapper">
+            <label class="form-input-label" for="ipAddress">Ip</label>
+            <input class="form-input-field" id="ipAddress" type="text" formControlName="ipAddress" />
+          </div>
+          <div class="form-input-wrapper">
+            <label class="form-input-label" for="port">Puerto</label>
+            <input class="form-input-field" id="port" type="text" formControlName="port" />
+          </div>
+          <button class="app-btn" type="submit" [disabled]="!scaleForm.valid">Guardar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+}

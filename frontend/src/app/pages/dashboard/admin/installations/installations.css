@@ -1,0 +1,5 @@
+.installation-container {
+  display: flex;
+  flex-direction: column; /* uno debajo del otro */
+  gap: 16px;              /* espacio entre componentes */
+}

@@ -1,0 +1,43 @@
+  <div class="content">
+
+    <div class="table-card">
+      <table class="data-table">
+        <thead class="title-table">
+          <tr>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Población</th>
+            <th>Ciudad</th>
+            <th class="actions-col">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let installation of store.filteredInstallations()">
+            <td>{{ installation.name }}</td>
+            <td>{{ installation.address }}</td>
+            <td>{{ installation.location }}</td>
+            <td>{{ installation.city }}</td>
+
+            <td class="actions-col">
+              <div class="actions">
+              <button class="app-btn-update" (click)="editInstallation(installation)">Editar</button>
+              <button class="app-btn-delete" (click)="deleteInstallation(installation.id!)">Borrar</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+     <!-- Aqui abrimos los modales necesarios -->
+   @if(isGeneralParamsModalOpen === true){
+    <app-modal-installation
+      [visible]="isGeneralParamsModalOpen"
+      [installationToEdit]="installationEdit"
+      (closed)="closeModalInstallations()">
+    </app-modal-installation>
+   }
+
+  </div>

@@ -1,0 +1,30 @@
+@if (visible) {
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+    <div class="modal-window">
+        <div class="modal-header">
+            <h2 class="modal-title">Instalaciones</h2>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="installationForm" (ngSubmit)="sendForm()">
+                <div class="form-input-wrapper">
+                    <label class="form-input-label" for="name">Nombre</label>
+                    <input class="form-input-field" id="name" type="text" formControlName="name" />
+                </div>
+                <div class="form-input-wrapper">
+                    <label class="form-input-label" for="address">Dirección</label>
+                    <input class="form-input-field" id="address" type="text" formControlName="address" />
+                </div>
+                <div class="form-input-wrapper">
+                    <label class="form-input-label" for="location">Población</label>
+                    <input class="form-input-field" id="location" type="text" formControlName="location" />
+                </div>
+                <div class="form-input-wrapper">
+                    <label class="form-input-label" for="city">Ciudad</label>
+                    <input class="form-input-field" id="city" type="text" formControlName="city" />
+                </div>
+                <button class="app-btn" type="submit" [disabled]="!installationForm.valid">Guardar</button>
+            </form>
+        </div>
+    </div>
+</div>
+}

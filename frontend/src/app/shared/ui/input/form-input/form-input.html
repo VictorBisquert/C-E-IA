@@ -1,0 +1,18 @@
+<div class="form-input-wrapper">
+  <label [for]="name" class="form-input-label">
+    {{ label }}
+  </label>
+
+  <input
+    [id]="name"
+    [type]="type"
+    [placeholder]="placeholder"
+    [formControl]="control!" [readOnly]="readOnly"
+    [required]="required"
+    class="form-input-field"
+  />
+
+  <div class="form-input-error" *ngIf="control?.invalid && control?.touched">
+    {{ getErrorMessage() }}
+  </div>
+</div>
